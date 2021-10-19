@@ -1,0 +1,83 @@
+.form {
+  width: 340px;
+  height: 500px;
+  background: #e6e6e6;
+  border-radius: 8px;
+  border: 2px solid #78788c;
+  margin: calc(50vh - 220px) auto;
+  padding: 20px 30px;
+  max-width: calc(100vw - 40px);
+  box-sizing: border-box;
+  font-family: "Montserrat", sans-serif;
+  position: relative;
+}
+h2 {
+  margin: 10px 100px;
+  padding-bottom: 10px;
+  width: 180px;
+  color: #78788c;
+}
+input {
+  width: 100%;
+  padding: 10px;
+  box-sizing: border-box;
+  background: none;
+  outline: none;
+  resize: none;
+  border: 0;
+  font-family: "Montserrat", sans-serif;
+  transition: all 0.3s;
+  border-bottom: 2px solid #bebed2;
+}
+input:focus {
+  border-bottom: 2px solid #78788c;
+}
+p:before {
+  content: attr(type);
+  display: block;
+  font-size: 14px;
+  color: #5a5a5a;
+}
+.formButton {
+  position: relative;
+  bottom: -30px;
+  float: right;
+  padding: 8px 12px;
+  margin: 8px 8px 0;
+  font-family: "Montserrat", sans-serif;
+  border: 2px solid #78788c;
+  background: 0;
+  color: #5a5a6e;
+  cursor: pointer;
+  transition: all 0.3s;
+}
+.formButton:hover {
+  background: #78788c;
+  color: #fff;
+}
+.legend2 {
+  position: relative;
+  bottom: -22px;
+  display: inline-block;
+  background: #e6e6e6;
+  right: -30px;
+  color: #fff;
+  font-size: 13px;
+}
+span {
+  margin: 0 5px 0 15px;
+}
+
+.input {
+  border: 2px solid #78788c;
+  border-radius: 6px;
+}
+.formError {
+  font-family: "Montserrat", sans-serif;
+  position: absolute;
+  left: 45px;
+  color: rgb(240, 26, 26);
+  font-size: 10pt;
+  margin: 5px;
+  padding: 0;
+}
