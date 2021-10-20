@@ -1,15 +1,9 @@
-import "./App.css";
+import "./App.scss";
 import TestForm from "./components/TestForm";
-import Todo from "./components/Todo/Todo";
+//import Todo from "./components/Todo/Todo";
 
 function App() {
-  return (
-    
-      
-        <TestForm/>
-      
-    
-  );
+  return <TestForm />;
 }
 
 export default App;

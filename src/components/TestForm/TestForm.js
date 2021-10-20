@@ -1,31 +1,41 @@
 import React from "react";
-import "./testForm.css";
-import FormErrors from "./FormErrors";
+import "./testForm.scss";
+import Fields from "./Fields";
 class TestForm extends React.Component {
   state = {
     fields: {
-      Name: {
-        name: "Name",
+      name: {
+        title: 'Name',
+        type: "name",
+        name: "name",
         value: "",
         error: false,
+        placeholder: "Input your name..",
         validator: (value = "") => {
           return value.length >= 2 ? false : "Name is too short";
         },
       },
-      Email: {
-        name: "Email",
+      email: {
+        title: 'Email',
+        type: "email",
+        name: "email",
         value: "",
         error: false,
+        placeholder: "Input your email..",
         validator: (value = "") => {
           return value.match(/^([\w.%+-]+)@([\w-]+\.)+([\w]{2,})$/i)
             ? false
             : "Email is invalid";
         },
       },
-      Password: {
-        name: "Password",
+      password: {
+        title: 'Password',
+        type: "password",
+        name: "password",
+        autoComplete: "false",
         value: "",
         error: false,
+        placeholder: "Input your password..",
         validator: (value = "") => {
           return value.match(
             /(?=.*[0-9])(?=.*[a-z])(?=.*[A-Z])[0-9a-zA-Z!@#$%^&*]{6,}/g
@@ -34,132 +44,174 @@ class TestForm extends React.Component {
             : "Password is too simple";
         },
       },
-      PasswordConfirm: {
-        name: "PasswordConfirm",
+      passwordConfirm: {
+        title: 'Password confirm',
+        type: "password",
+        name: "passwordConfirm",
+        autoComplete: "false",
         value: "",
         error: false,
-        validator: (value = "") => {
-          return value === this.state.fields.Password.value
-            ? false
-            : "Passwords isnt match";
+        placeholder: "Confirm your password..",
+        validator: (value = "", allValues) => {
+          return value === allValues.password ? false : "Passwords dont match";
         },
       },
     },
+    isError: null,
   };
 
   handleChange = (event) => {
     const { value, name } = event.target;
     const currentField = this.state.fields[name];
-    const error = currentField.validator(currentField.value);
-    this.setState({
-      fields: {
-        ...this.state.fields,
-        [name]: { ...currentField, value, error },
+    let errors = [];
+    const allValues = Object.entries(this.state.fields).reduce(
+      (newObj, [fieldname, fieldState]) => {
+        return { ...newObj, [fieldname]: fieldState.value };
       },
-    });
-  };
-  handleSubmit = (event) => {
-    // event.preventDefault();
-    // Object.entries(this.state.fields).forEach(([key,value]) => {
-    //   let error = value.validator([key].value);
-    //   let stateFields = this.state.fields;
-    //   let currentField = this.state.fields[key];
-    //   this.setState({
-    //     fields: {
-    //       ...stateFields,
-    //       [key]: { ...currentField, error },
-    //     },
-    //   });
-    // });
-
-    event.preventDefault();
-    const { Name, Email, Password, PasswordConfirm } = this.state.fields;
-    const errorName = Name.validator(Name.value);
-    const errorEmail = Email.validator(Email.value);
-    const errorPassword = Password.validator(Password.value);
-    const errorPasswordConfirm = PasswordConfirm.validator(
-      PasswordConfirm.value
+      {}
     );
-    !errorName &&
-      !errorEmail &&
-      !errorPassword &&
-      !errorPasswordConfirm &&
-      console.log(
-        `Name : ${Name.value} | Email : ${Email.value} | Password : ${Password.value} | Password Confirm : ${PasswordConfirm.value}`
-      );
-    this.setState({
-      fields: {
-        ...this.state.fields,
-        Name: { ...this.state.fields.Name, error: errorName },
-        Email: { ...this.state.fields.Email, error: errorEmail },
-        Password: { ...this.state.fields.Password, error: errorPassword },
-        PasswordConfirm: {
-          ...this.state.fields.PasswordConfirm,
-          error: errorPasswordConfirm,
+
+    const error = currentField.validator(value, allValues);
+    this.setState(
+      {
+        fields: {
+          ...this.state.fields,
+          [name]: { ...currentField, value, error },
         },
       },
+      () => {
+        Object.entries(this.state.fields).forEach(([fieldName, fieldState]) => {
+          let error = fieldState.error;
+          errors.push(error);
+        });
+        let fieldsError = !errors.every((err) => err === false);
+        this.setState({ isError: fieldsError });
+      }
+    );
+  };
+  handleSubmit = (event) => {
+    event.preventDefault();
+    const { fields } = this.state;
+    const updatedValues = {};
+    const errors = [];
+    const allValues = Object.entries(fields).reduce(
+      (newObj, [fieldname, fieldState]) => {
+        return { ...newObj, [fieldname]: fieldState.value };
+      },
+      {}
+    );
+
+    Object.entries(fields).forEach(([fieldName, fieldState]) => {
+      const updatedFields = { ...fields[fieldName] };
+      let error = fieldState.validator(fieldState.value, allValues);
+      updatedFields.error = error;
+      updatedValues[fieldName] = updatedFields;
+    });
+
+    this.setState({ fields: updatedValues }, () => {
+      Object.entries(this.state.fields).forEach(([fieldName, fieldState]) => {
+        let error = fieldState.error;
+        errors.push(error);
+      });
+      let fieldsError = !errors.every((err) => err === false);
+      this.setState({ isError: fieldsError }, () => {
+        !this.state.isError &&
+          Object.entries(this.state.fields).forEach(
+            ([fieldName, fieldState]) => {
+              console.log(`${fieldName}: ${fieldState.value}`);
+            }
+          );
+      });
     });
   };
 
   handleReset = (event) => {
-    // event.preventDefault();
-    // Object.entries(this.state.fields).forEach(([key]) => {
-    //   let currentField = this.state.fields[key];
-    //   this.setState({
-    //     fields: {
-    //       ...this.state.fields,
-    //       [key]: { ...currentField, value: "" },
-    //     },
-    //   });
-    // });
+    event.preventDefault();
+    const { fields } = this.state;
+    const updatedValues = {};
+    Object.entries(fields).forEach(([fieldname]) => {
+      const updatedFields = { ...fields[fieldname] };
+      updatedFields.value = "";
+      updatedFields.error = false;
+      updatedValues[fieldname] = updatedFields;
+    });
+    this.setState({ fields: updatedValues, isError: null });
+  };
+
+  handlePasswordChange = (event) => {
+    const { value } = event.target;
+    const passwordField = this.state.fields.password;
+    const error = passwordField.validator(value);
+    const errors = [];
+
+    this.setState(
+      {
+        fields: {
+          ...this.state.fields,
+          password: { ...passwordField, value, error },
+        },
+      },
+      () => {
+        const allValues = Object.entries(this.state.fields).reduce(
+          (newObj, [fieldname, fieldState]) => {
+            return { ...newObj, [fieldname]: fieldState.value };
+          },
+          {}
+        );
+        const confirmField = this.state.fields.passwordConfirm;
+        if (confirmField.value) {
+          const confirmErr = confirmField.validator(
+            confirmField.value,
+            allValues
+          );
+          this.setState(
+            {
+              fields: {
+                ...this.state.fields,
+                passwordConfirm: { ...confirmField, error: confirmErr },
+              },
+            },
+            () => {
+              Object.entries(this.state.fields).forEach(
+                ([fieldName, fieldState]) => {
+                  let error = fieldState.error;
+                  errors.push(error);
+                }
+              );
+              let fieldsError = !errors.every((err) => err === false);
+              this.setState({ isError: fieldsError });
+            }
+          );
+        }
+      }
+    );
   };
 
   render() {
-    const {
-      fields: { Name, Email, Password, PasswordConfirm },
-    } = this.state;
     return (
       <>
         <form className="form" onSubmit={this.handleSubmit}>
           <h2>FORM</h2>
-          <p type="Name:" className="legend2"></p>
+          {Object.entries(this.state.fields).map(([fieldName, fieldState]) => {
+            return (
+              <Fields
+              title={fieldState.title}
+                key={fieldState.name}
+                error={fieldState.error}
+                autoComplete={fieldState.autoComplete}
+                type={fieldState.type}
+                placeholder={fieldState.placeholder}
+                name={fieldState.name}
+                value={fieldState.value}
+                onChange={
+                  fieldState.name === "password"
+                    ? this.handlePasswordChange
+                    : this.handleChange
+                }
+              />
+            );
+          })}
 
-          <input
-            className="input"
-            placeholder="Name.."
-            name="Name"
-            value={Name.value}
-            onChange={this.handleChange}
-          ></input>
-
-          <FormErrors err={Name.error} />
-          <p type="Email:" className="legend2"></p>
-          <input
-            className="input"
-            placeholder="email.."
-            name="Email"
-            value={Email.value}
-            onChange={this.handleChange}
-          ></input>
-          <FormErrors err={Email.error} />
-          <p type="Password:" className="legend2"></p>
-          <input
-            className="input"
-            placeholder="Password.."
-            name="Password"
-            value={Password.value}
-            onChange={this.handleChange}
-          ></input>
-          <FormErrors err={Password.error} />
-          <p type="Confirm password:" className="legend2"></p>
-          <input
-            className="input"
-            placeholder="Confirm password.."
-            name="PasswordConfirm"
-            value={PasswordConfirm.value}
-            onChange={this.handleChange}
-          ></input>
-          <FormErrors err={PasswordConfirm.error} />
           <button onClick={this.handleReset} className="formButton">
             Reset
           </button>
