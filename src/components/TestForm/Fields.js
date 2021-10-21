@@ -20,7 +20,6 @@ const Fields = ({
         autoComplete={autoComplete}
         name={name}
         value={value}
-        
         onChange={onChange}
       ></input>
       <p className="formError">{error}</p>
