@@ -5,7 +5,7 @@ class TestForm extends React.Component {
   state = {
     fields: {
       name: {
-        title: 'Name',
+        title: "Name",
         type: "name",
         name: "name",
         value: "",
@@ -16,7 +16,7 @@ class TestForm extends React.Component {
         },
       },
       email: {
-        title: 'Email',
+        title: "Email",
         type: "email",
         name: "email",
         value: "",
@@ -29,7 +29,7 @@ class TestForm extends React.Component {
         },
       },
       password: {
-        title: 'Password',
+        title: "Password",
         type: "password",
         name: "password",
         autoComplete: "false",
@@ -45,7 +45,7 @@ class TestForm extends React.Component {
         },
       },
       passwordConfirm: {
-        title: 'Password confirm',
+        title: "Password confirm",
         type: "password",
         name: "passwordConfirm",
         autoComplete: "false",
@@ -80,7 +80,7 @@ class TestForm extends React.Component {
         },
       },
       () => {
-        Object.entries(this.state.fields).forEach(([fieldName, fieldState]) => {
+        Object.entries(this.state.fields).forEach(([_, fieldState]) => {
           let error = fieldState.error;
           errors.push(error);
         });
@@ -109,7 +109,7 @@ class TestForm extends React.Component {
     });
 
     this.setState({ fields: updatedValues }, () => {
-      Object.entries(this.state.fields).forEach(([fieldName, fieldState]) => {
+      Object.entries(this.state.fields).forEach(([_, fieldState]) => {
         let error = fieldState.error;
         errors.push(error);
       });
@@ -172,12 +172,10 @@ class TestForm extends React.Component {
               },
             },
             () => {
-              Object.entries(this.state.fields).forEach(
-                ([fieldName, fieldState]) => {
-                  let error = fieldState.error;
-                  errors.push(error);
-                }
-              );
+              Object.entries(this.state.fields).forEach(([_, fieldState]) => {
+                let error = fieldState.error;
+                errors.push(error);
+              });
               let fieldsError = !errors.every((err) => err === false);
               this.setState({ isError: fieldsError });
             }
@@ -192,10 +190,10 @@ class TestForm extends React.Component {
       <>
         <form className="form" onSubmit={this.handleSubmit}>
           <h2>FORM</h2>
-          {Object.entries(this.state.fields).map(([fieldName, fieldState]) => {
+          {Object.entries(this.state.fields).map(([_, fieldState]) => {
             return (
               <Fields
-              title={fieldState.title}
+                title={fieldState.title}
                 key={fieldState.name}
                 error={fieldState.error}
                 autoComplete={fieldState.autoComplete}
