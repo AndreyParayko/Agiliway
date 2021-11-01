@@ -16,8 +16,8 @@ function App() {
         <Header />
         <Switch>
           <Route path="/" component={HomePage} exact />
-          <Route path="/books" component={BookListFunctional} exact />
-          <Route path="/book-details/:id" component={BookDetailsFunctional} exact />
+          <Route path="/books" component={BookList} exact />
+          <Route path="/book-details/:id" component={BookDetails} exact />
         </Switch>
         </div>
         <Footer />

@@ -32,7 +32,7 @@ const BookDetailsFunctional = () => {
           excerpt={data.excerpt}
         />
       )}
-      {isLoading && setTimeout(null, 2000) && <Loader />}
+      {isLoading && <Loader />}
     </div>
   );
 };
