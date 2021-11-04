@@ -3,29 +3,16 @@ import { getBookById } from "../../../api/books";
 import BookDetailsItem from "../BookDetailsItem";
 import Loader from "../../../components/Loader"
 import "./styles.scss"
+import { connect } from "react-redux";
 
 class BookDetais extends React.Component {
-  state = {
-    data: [],
-    isLoading: true,
-    isError: false
-  };
+
   componentDidMount() {
     const { id } = this.props.match.params;
-    getBookById(id)
-      .then(response =>
-        this.setState({
-          data: response.data,
-          isLoading: false
-        })
-      )
-      .catch(rej => {
-        console.log("Error in parsing module", rej);
-        this.setState({ isError: true });
-      });
+    this.props.getData(id)
   }
   render() {
-    const { data, isLoading } = this.state;
+    const { data, isLoading } = this.props;
     return (
       <div className="details-container">
         {!isLoading && (
@@ -33,15 +20,32 @@ class BookDetais extends React.Component {
               title={data.title}
               description={data.description}
               id={data.id}
+              key={data.id}
               pageCount={data.pageCount}
               publishDate={data.publishDate}
               excerpt={data.excerpt}
             />
         )}
-        {isLoading && setTimeout(null,2000) && <Loader/>}
+        {isLoading && <Loader/>}
       </div>
     );
   }
 }
 
-export default BookDetais;
+const mapStateToProps = (state) => {
+  return {
+    data: state.book.data,
+    isLoading: state.book.isLoading,
+  };
+};
+
+const mapDispatchToProps = (dispatch) => {
+  return {
+    getData: (id) => {
+      dispatch(getBookById(id));
+    },
+  };
+};
+
+export default connect(mapStateToProps, mapDispatchToProps)(BookDetais);
+
