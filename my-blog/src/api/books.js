@@ -13,7 +13,6 @@ export const getBooks = () => {
 export const getBookById = (id) => {
   return (dispatch) => {
     client.get(`/books/${id}`).then((response) => {
-        console.log(response.data)
       dispatch(getBookAction(response.data));
     });
   };

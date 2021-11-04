@@ -9,9 +9,11 @@ class BookDetais extends React.Component {
 
   componentDidMount() {
     const { id } = this.props.match.params;
+    console.log(this.props)
     this.props.getData(id)
   }
   render() {
+    console.log('csacas',this.props)
     const { data, isLoading } = this.props;
     return (
       <div className="details-container">
@@ -19,7 +21,6 @@ class BookDetais extends React.Component {
             <BookDetailsItem
               title={data.title}
               description={data.description}
-              id={data.id}
               key={data.id}
               pageCount={data.pageCount}
               publishDate={data.publishDate}
