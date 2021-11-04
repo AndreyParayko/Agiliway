@@ -10,7 +10,7 @@ const BookDetailsItem = ({
   excerpt,
 }) => (
   <Jumbotron>
-    <h1 key={id} className="display-1 text-center">
+    <h1 className="display-1 text-center">
       Book Title: {title}
     </h1>
     <p className="display-5 text-center" key={id}>

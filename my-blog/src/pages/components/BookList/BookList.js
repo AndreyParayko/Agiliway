@@ -5,34 +5,17 @@ import Pagination from "../Pagination/Pagination";
 import BookItem from "../BookItem/BookItem";
 import Loader from "../../../components/Loader";
 import { Row, Col, CardDeck } from "reactstrap";
+import { connect } from "react-redux";
 
 const POSTS_PER_PAGE = 18;
 
 class BookList extends React.Component {
   state = {
-    data: [],
-    isLoading: true,
-    isError: false,
     currentPageNumber: 1,
   };
 
   componentDidMount() {
-    getBooks()
-      .then((response) =>
-        this.setState(
-          {
-            data: response.data,
-            isLoading: false,
-          },
-          () => {
-            console.log(this.state.data);
-          }
-        )
-      )
-      .catch((rej) => {
-        console.log("Error in parsing module", rej);
-        this.setState({ isError: true });
-      });
+    this.props.getData()
   }
   paginationHandler = (number) => {
     this.setState({
@@ -41,7 +24,7 @@ class BookList extends React.Component {
   };
 
   render() {
-    const { isLoading, data } = this.state;
+    const { isLoading, data } = this.props;
     const indexOfLastPost = this.state.currentPageNumber * POSTS_PER_PAGE;
     const indexOfFirstPost = indexOfLastPost - POSTS_PER_PAGE;
     const currentPosts = data.slice(indexOfFirstPost, indexOfLastPost);
@@ -79,5 +62,20 @@ class BookList extends React.Component {
     );
   }
 }
+const mapStateToProps = (state) => {
+  return {
+    data: state.books.data,
+    isLoading: state.books.isLoading,
+  };
+};
 
-export default BookList;
+const mapDispatchToProps = (dispatch) => {
+  return {
+    getData: () => {
+      dispatch(getBooks());
+    },
+  };
+};
+
+export default connect(mapStateToProps, mapDispatchToProps)(BookList);
+
