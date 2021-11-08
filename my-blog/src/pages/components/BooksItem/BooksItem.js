@@ -3,7 +3,7 @@ import "./styles.scss";
 import { NavLink } from "react-router-dom";
 import { Card, Button, CardTitle, CardText, CardBody, Col } from "reactstrap";
 
-const BookItem = ({ title, id, description }) => (
+const BooksItem = ({ title, id, description }) => (
   <Col sm="2" md="3" lg="4">
     <Card>
       <CardBody>
@@ -21,4 +21,4 @@ const BookItem = ({ title, id, description }) => (
   </Col>
 );
 
-export default BookItem;
+export default BooksItem;
