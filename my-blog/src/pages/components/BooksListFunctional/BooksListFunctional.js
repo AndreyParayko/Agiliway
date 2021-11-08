@@ -2,26 +2,21 @@ import { useEffect, useState } from "react";
 import "./styles.scss";
 import { getBooks } from "../../../api/books";
 import Pagination from "../Pagination/Pagination";
-import BookItem from "../BookItem/BookItem";
+import BooksItem from "../BooksItem/BooksItem";
 import Loader from "../../../components/Loader";
 import { Row, Col, CardDeck } from "reactstrap";
+import { useSelector, useDispatch } from "react-redux";
 
 const POSTS_PER_PAGE = 18;
 
-const BookListFunctional = () => {
-  const [data, setData] = useState([]);
-  const [isLoading, setIsLoading] = useState(true);
-  const [isError, setIsError] = useState(false);
+const BooksListFunctional = () => {
+  const { data, isLoading } = useSelector((state) => state.books);
+  const dispatch = useDispatch();
   const [currentPageNumber, setCurrentPageNumber] = useState(1);
 
   useEffect(() => {
-    getBooks()
-      .then((response) => setData(response.data), setIsLoading(false))
-      .catch(
-        (rej) => console.log("Error in parsing module", rej, isError),
-        setIsError(true)
-      );
-  }, [isError]);
+    dispatch(getBooks());
+  }, [dispatch]);
 
   const indexOfLastPost = currentPageNumber * POSTS_PER_PAGE;
   const indexOfFirstPost = indexOfLastPost - POSTS_PER_PAGE;
@@ -33,7 +28,7 @@ const BookListFunctional = () => {
         <CardDeck>
           <Row>
             {currentPosts.map((item, index) => (
-              <BookItem
+              <BooksItem
                 title={item.title}
                 description={item.description}
                 id={item.id}
@@ -60,4 +55,4 @@ const BookListFunctional = () => {
   );
 };
 
-export default BookListFunctional;
+export default BooksListFunctional;

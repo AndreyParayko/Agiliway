@@ -2,14 +2,14 @@ import React from "react";
 import "./styles.scss";
 import { getBooks } from "../../../api/books";
 import Pagination from "../Pagination/Pagination";
-import BookItem from "../BookItem/BookItem";
+import BooksItem from "../BooksItem/BooksItem";
 import Loader from "../../../components/Loader";
 import { Row, Col, CardDeck } from "reactstrap";
 import { connect } from "react-redux";
 
 const POSTS_PER_PAGE = 18;
 
-class BookList extends React.Component {
+class BooksList extends React.Component {
   state = {
     currentPageNumber: 1,
   };
@@ -35,7 +35,7 @@ class BookList extends React.Component {
           <CardDeck>
             <Row>
               {currentPosts.map((item, index) => (
-                <BookItem
+                <BooksItem
                   title={item.title}
                   description={item.description}
                   id={item.id}
@@ -77,5 +77,5 @@ const mapDispatchToProps = (dispatch) => {
   };
 };
 
-export default connect(mapStateToProps, mapDispatchToProps)(BookList);
+export default connect(mapStateToProps, mapDispatchToProps)(BooksList);
 

@@ -4,21 +4,15 @@ import BookDetailsItem from "../BookDetailsItem";
 import Loader from "../../../components/Loader";
 import "./styles.scss";
 import { useParams } from "react-router";
+import { useSelector, useDispatch } from "react-redux";
 
 const BookDetailsFunctional = () => {
-  const [data, setData] = useState([]);
-  const [isLoading, setIsLoading] = useState(true);
-  const [isError, setIsError] = useState(false);
+  const { data, isLoading } = useSelector((state) => state.book);
   const { id } = useParams();
-
+  const dispatch = useDispatch();
   useEffect(() => {
-    getBookById(id)
-      .then((response) => setData(response.data), setIsLoading(false))
-      .catch((rej) => {
-        console.log("Error in parsing module", rej, isError);
-        setIsError(true);
-      });
-  }, [id, isError]);
+    dispatch(getBookById(id));
+  }, [dispatch, id]);
 
   return (
     <div className="details-container">

@@ -1,33 +1,33 @@
 import React from "react";
 import { getBookById } from "../../../api/books";
 import BookDetailsItem from "../BookDetailsItem";
-import Loader from "../../../components/Loader"
-import "./styles.scss"
+import Loader from "../../../components/Loader";
+import "./styles.scss";
 import { connect } from "react-redux";
 
 class BookDetais extends React.Component {
-
   componentDidMount() {
     const { id } = this.props.match.params;
-    console.log(this.props)
-    this.props.getData(id)
+    console.log(this.props);
+    this.props.getData(id);
   }
+
   render() {
-    console.log('csacas',this.props)
+    console.log("csacas", this.props);
     const { data, isLoading } = this.props;
     return (
       <div className="details-container">
         {!isLoading && (
-            <BookDetailsItem
-              title={data.title}
-              description={data.description}
-              key={data.id}
-              pageCount={data.pageCount}
-              publishDate={data.publishDate}
-              excerpt={data.excerpt}
-            />
+          <BookDetailsItem
+            title={data.title}
+            description={data.description}
+            key={data.id}
+            pageCount={data.pageCount}
+            publishDate={data.publishDate}
+            excerpt={data.excerpt}
+          />
         )}
-        {isLoading && <Loader/>}
+        {isLoading && <Loader />}
       </div>
     );
   }
@@ -49,4 +49,3 @@ const mapDispatchToProps = (dispatch) => {
 };
 
 export default connect(mapStateToProps, mapDispatchToProps)(BookDetais);
-
