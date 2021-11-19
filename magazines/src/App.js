@@ -7,6 +7,7 @@ import Magazines from "./pages/Magazines";
 import Statistic from "./pages/Statistic";
 import MagazineDetails from "./pages/MagazineDetails";
 
+
 function App() {
   return (
     <Router>

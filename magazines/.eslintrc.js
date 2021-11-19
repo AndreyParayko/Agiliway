@@ -1,21 +1,13 @@
 module.exports = {
-    "env": {
-        "browser": true,
-        "es2021": true
+  env: {
+    es2021: true,
+  },
+  extends: "airbnb",
+  parserOptions: {
+    ecmaFeatures: {
+      jsx: true,
     },
-    "extends": "plugin:react/recommended",
-    "parser": "@typescript-eslint/parser",
-    "parserOptions": {
-        "ecmaFeatures": {
-            "jsx": true
-        },
-        "ecmaVersion": 13,
-        "sourceType": "module"
-    },
-    "plugins": [
-        "react",
-        "@typescript-eslint"
-    ],
-    "rules": {
-    }
+    ecmaVersion: 6,
+  },
+  plugins: ["react"],
 };

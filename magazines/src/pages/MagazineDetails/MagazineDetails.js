@@ -13,7 +13,9 @@ class MagazineDetails extends React.Component {
 
     this.props.getMagazineById(id);
   }
+
   render() {
+
     const { data, isLoading } = this.props;
     const date = moment(data.publishDate).format("LT dddd MMM Mo YYYY NNNN");
     console.log(data);

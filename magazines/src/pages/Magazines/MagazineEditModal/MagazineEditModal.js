@@ -1,7 +1,6 @@
 import React from "react";
 import { Modal, Button } from "antd";
 import ModalForm from "../ModalForm";
-
 export class MagazineEditModal extends React.Component {
   formHandleSubmit = (formData) => {
     const id = formData.uuid;
