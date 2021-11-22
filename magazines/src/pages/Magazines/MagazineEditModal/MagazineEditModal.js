@@ -1,6 +1,7 @@
 import React from "react";
 import { Modal, Button } from "antd";
 import ModalForm from "../ModalForm";
+import PropTypes from "prop-types";
 export class MagazineEditModal extends React.Component {
   formHandleSubmit = (formData) => {
     const id = formData.uuid;
@@ -43,5 +44,11 @@ export class MagazineEditModal extends React.Component {
     );
   }
 }
+MagazineEditModal.propTypes = {
+  closeModal: PropTypes.func,
+  isLoading: PropTypes.bool,
+  editAction: PropTypes.func,
+  initialValues: PropTypes.object,
+};
 
 export default MagazineEditModal;

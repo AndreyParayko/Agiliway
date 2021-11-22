@@ -1,11 +1,11 @@
 import React from "react";
-import magazine from "../../../assets/images/magazine.jpg";
-import { Card, Col } from "antd";
-import { Menu, Dropdown } from "antd";
-import { EllipsisOutlined, FileMarkdownOutlined } from "@ant-design/icons";
-import { NavLink } from "react-router-dom";
-import { FlexButton, FlexCenter } from "../styled";
 import PropTypes from "prop-types";
+import { NavLink } from "react-router-dom";
+import { Card, Col, Menu, Dropdown } from "antd";
+import { EllipsisOutlined, FileMarkdownOutlined } from "@ant-design/icons";
+
+import { FlexButton, FlexCenter } from "../styled";
+import magazine from "../../../assets/images/magazine.jpg";
 
 const { Meta } = Card;
 const MagazineItem = ({

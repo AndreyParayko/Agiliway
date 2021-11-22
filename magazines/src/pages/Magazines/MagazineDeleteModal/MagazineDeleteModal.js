@@ -3,22 +3,26 @@ import { Modal, Button } from "antd";
 import { ExclamationCircleOutlined } from "@ant-design/icons";
 import { FlexCenter } from "../styled";
 import Loader from "../../../components/Loader";
+import PropTypes from "prop-types";
 
 export class MagazineDeleteModal extends React.Component {
   render() {
-    const { closeModal, modalVisible, deleteAction, id, isLoading, name } =
-      this.props;
+    const { closeModal, deleteAction, id, isLoading, name } = this.props;
     return (
       <>
         <Modal
-          visible={modalVisible}
+          visible={true}
           title="Delete magazine"
           onCancel={closeModal}
           footer={[
             <Button onClick={closeModal} type="primary">
               Cancel
             </Button>,
-            <Button disabled={isLoading} onClick={() => deleteAction(id)} type="danger">
+            <Button
+              disabled={isLoading}
+              onClick={() => deleteAction(id)}
+              type="danger"
+            >
               Submit
             </Button>,
           ]}
@@ -41,4 +45,11 @@ export class MagazineDeleteModal extends React.Component {
     );
   }
 }
+MagazineDeleteModal.propTypes = {
+  closeModal: PropTypes.func,
+  isLoading: PropTypes.bool,
+  deleteAction: PropTypes.func,
+  id: PropTypes.string,
+  name: PropTypes.string,
+};
 export default MagazineDeleteModal;

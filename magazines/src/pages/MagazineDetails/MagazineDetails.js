@@ -6,6 +6,7 @@ import getMagazineByIdThunk from "../Magazines/thunks/MagazineThunks";
 import Loader from "../../components/Loader";
 import moment from "moment";
 import PropTypes from "prop-types";
+import * as selectors from "./selectors/magazine.selectors";
 
 class MagazineDetails extends React.Component {
   componentDidMount() {
@@ -51,8 +52,8 @@ MagazineDetails.propTypes = {
 
 const mapStateToProps = (state) => {
   return {
-    data: state.magazine.data,
-    isLoading: state.magazine.isLoading,
+    data: selectors.selectData(state),
+    isLoading: selectors.selectIsLoading(state),
   };
 };
 

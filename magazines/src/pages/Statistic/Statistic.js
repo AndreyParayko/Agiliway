@@ -7,6 +7,7 @@ import { getMagazinesThunk } from "../Magazines/thunks/MagazinesThunks";
 import { StyledWrapper } from "../Magazines/styled";
 import { selectMagazinesData } from "../Magazines/selectors/magazines.selectors";
 import PropTypes from "prop-types";
+import moment from "moment";
 
 class Statistic extends React.Component {
   state = {

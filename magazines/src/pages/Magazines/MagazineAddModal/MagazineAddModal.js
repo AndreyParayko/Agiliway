@@ -1,6 +1,7 @@
 import React from "react";
 import { Modal, Button } from "antd";
 import ModalForm from "../ModalForm";
+import PropTypes from "prop-types";
 
 export class MagazineAddModal extends React.Component {
   formHandleSubmit = (data) => {
@@ -28,11 +29,19 @@ export class MagazineAddModal extends React.Component {
             </Button>,
           ]}
         >
-          <ModalForm isLoading={isLoading} handleSubmit={this.formHandleSubmit} />
+          <ModalForm
+            isLoading={isLoading}
+            handleSubmit={this.formHandleSubmit}
+          />
         </Modal>
       </>
     );
   }
 }
+MagazineAddModal.propTypes = {
+  closeModal: PropTypes.func,
+  isLoading: PropTypes.bool,
+  addAction: PropTypes.func,
+};
 
 export default MagazineAddModal;

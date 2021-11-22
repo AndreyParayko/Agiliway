@@ -98,7 +98,6 @@ class Magazines extends React.Component {
             openModal={openAddModal}
             closeModal={closeModal}
             isLoading={modalIsLoading}
-            modalVisible={true}
             addAction={addMagazine}
           />
         )}
@@ -106,7 +105,6 @@ class Magazines extends React.Component {
           <MagazineEditModal
             closeModal={closeModal}
             isLoading={modalIsLoading}
-            modalVisible={true}
             editAction={editMagazine}
             initialValues={modalEditInitialValues}
           />
@@ -114,7 +112,6 @@ class Magazines extends React.Component {
         {modalType === DELETE_MODAL_TYPE && (
           <MagazineDeleteModal
             closeModal={closeModal}
-            modalVisible={true}
             id={modalDeleteId}
             deleteAction={deleteMagazine}
             isLoading={modalIsLoading}

@@ -10,4 +10,8 @@ module.exports = {
     ecmaVersion: 6,
   },
   plugins: ["react"],
+  rules: {
+    "react/jsx-filename-extension": [1, { extensions: [".js", ".jsx"] }],
+    "linebreak-style": ["error", "windows"],
+  },
 };

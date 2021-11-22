@@ -3,9 +3,9 @@ import { Form, Field } from "react-final-form";
 import { InputField } from "./InputField";
 import { TextAreaField } from "./TextAreaField";
 import Loader from "../../../components/Loader";
+import PropTypes from "prop-types";
 
 class ModalForm extends React.Component {
-
   render() {
     const { isLoading, initialValues, handleSubmit } = this.props;
     return (
@@ -36,5 +36,11 @@ class ModalForm extends React.Component {
     );
   }
 }
+
+ModalForm.propTypes = {
+  isLoading: PropTypes.bool,
+  handleSubmit: PropTypes.func,
+  initialValues: PropTypes.object,
+};
 
 export default ModalForm;
