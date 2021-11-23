@@ -1,4 +1,4 @@
-import styled from "styled-components";
+import styled from 'styled-components';
 
 export const StyledWrapper = styled.div`
   padding: 30px;
@@ -14,6 +14,6 @@ export const FlexCenter = styled.div`
 `;
 
 export const FlexButton = styled.div`
-display: flex;
-justify-content: center;
+  display: flex;
+  justify-content: center;
 `;

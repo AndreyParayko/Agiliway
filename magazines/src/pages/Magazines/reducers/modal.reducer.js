@@ -9,12 +9,12 @@ import {
   EDIT_MODAL_GET_DATA_START,
   EDIT_MODAL_GET_DATA_ERROR,
   EDIT_MODAL_GET_DATA_SUCCESS,
-} from "../action-types/magazines.action-types";
+} from '../action-types/magazines.action-types';
 
 const initialState = {
   isLoading: true,
   data: {},
-  type: "",
+  type: '',
   id: undefined,
   name: undefined,
 };
@@ -25,19 +25,19 @@ const modalReducer = (state = initialState, action) => {
       return {
         ...state,
         isLoading: false,
-        type: "ADD_MODAL_TYPE",
+        type: 'ADD_MODAL_TYPE',
       };
     case EDIT_MODAL_OPEN:
       return {
         ...state,
         isLoading: false,
-        type: "EDIT_MODAL_TYPE",
+        type: 'EDIT_MODAL_TYPE',
       };
     case DELETE_MODAL_OPEN:
       return {
         ...state,
         isLoading: false,
-        type: "DELETE_MODAL_TYPE",
+        type: 'DELETE_MODAL_TYPE',
         id: action.payload.id,
         name: action.payload.name,
       };

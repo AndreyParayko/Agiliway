@@ -1,1 +1,1 @@
-export {default} from './MagazineEditModal'
+export {default} from './MagazineEditModal';

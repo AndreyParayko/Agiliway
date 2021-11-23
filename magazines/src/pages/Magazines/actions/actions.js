@@ -15,7 +15,7 @@ import {
   EDIT_MODAL_GET_DATA_SUCCESS,
   EDIT_MODAL_GET_DATA_ERROR,
   MODAL_FUNCTION_ERROR,
-} from "../action-types/magazines.action-types";
+} from '../action-types/magazines.action-types';
 
 export const getMagazinesSuccessAction = (payload) => ({
   type: GET_MAGAZINES_SUCCESS,

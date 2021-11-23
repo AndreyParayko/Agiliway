@@ -1,21 +1,25 @@
-import { Table, Input, Button, Space } from "antd";
-import Highlighter from "react-highlight-words";
-import { SearchOutlined } from "@ant-design/icons";
-import React from "react";
-import { connect } from "react-redux";
-import { getMagazinesThunk } from "../Magazines/thunks/MagazinesThunks";
-import { StyledWrapper } from "../Magazines/styled";
-import { selectMagazinesData } from "../Magazines/selectors/magazines.selectors";
-import PropTypes from "prop-types";
-import moment from "moment";
+import {
+  Table, Input, Button, Space,
+} from 'antd';
+import Highlighter from 'react-highlight-words';
+import { SearchOutlined } from '@ant-design/icons';
+import React from 'react';
+import { connect } from 'react-redux';
+import PropTypes from 'prop-types';
+import moment from 'moment';
+import { getMagazinesThunk } from '../Magazines/thunks/MagazinesThunks';
+import { StyledWrapper } from '../Magazines/styled';
+import { selectMagazinesData } from '../Magazines/selectors/magazines.selectors';
 
 class Statistic extends React.Component {
   state = {
-    searchText: "",
-    searchedColumn: "",
+    searchText: '',
+    searchedColumn: '',
   };
+
   componentDidMount() {
-    this.props.getMagazinesAction();
+    const { getMagazinesAction } = this.props;
+    getMagazinesAction();
   }
 
   getColumnSearchProps = (dataIndex) => ({
@@ -27,21 +31,19 @@ class Statistic extends React.Component {
     }) => (
       <div style={{ padding: 8 }}>
         <Input
+          key="input"
           ref={(node) => {
             this.searchInput = node;
           }}
           placeholder={`Search ${dataIndex}`}
           value={selectedKeys[0]}
-          onChange={(e) =>
-            setSelectedKeys(e.target.value ? [e.target.value] : [])
-          }
-          onPressEnter={() =>
-            this.handleSearch(selectedKeys, confirm, dataIndex)
-          }
-          style={{ marginBottom: 8, display: "block" }}
+          onChange={(e) => setSelectedKeys(e.target.value ? [e.target.value] : [])}
+          onPressEnter={() => this.handleSearch(selectedKeys, confirm, dataIndex)}
+          style={{ marginBottom: 8, display: 'block' }}
         />
         <Space>
           <Button
+            key="search"
             type="primary"
             onClick={() => this.handleSearch(selectedKeys, confirm, dataIndex)}
             icon={<SearchOutlined />}
@@ -51,6 +53,7 @@ class Statistic extends React.Component {
             Search
           </Button>
           <Button
+            key="reset"
             onClick={() => this.handleReset(clearFilters)}
             size="small"
             style={{ width: 90 }}
@@ -58,6 +61,7 @@ class Statistic extends React.Component {
             Reset
           </Button>
           <Button
+            key="filter"
             type="link"
             size="small"
             onClick={() => {
@@ -74,31 +78,32 @@ class Statistic extends React.Component {
       </div>
     ),
     filterIcon: (filtered) => (
-      <SearchOutlined style={{ color: filtered ? "#1890ff" : undefined }} />
+      <SearchOutlined key="outlined" style={{ color: filtered ? '#1890ff' : undefined }} />
     ),
-    onFilter: (value, record) =>
-      record[dataIndex]
-        ? record[dataIndex]
-            .toString()
-            .toLowerCase()
-            .includes(value.toLowerCase())
-        : "",
+    onFilter: (value, record) => (record[dataIndex]
+      ? record[dataIndex]
+        .toString()
+        .toLowerCase()
+        .includes(value.toLowerCase())
+      : ''),
     onFilterDropdownVisibleChange: (visible) => {
       if (visible) {
         setTimeout(() => this.searchInput.select(), 100);
       }
     },
-    render: (text) =>
-      this.state.searchedColumn === dataIndex ? (
-        <Highlighter
-          highlightStyle={{ backgroundColor: "#ffc069", padding: 0 }}
-          searchWords={[this.state.searchText]}
-          autoEscape
-          textToHighlight={text ? text.toString() : ""}
-        />
-      ) : (
-        text
-      ),
+    // eslint-disable-next-line react/destructuring-assignment
+    render: (text) => (this.state.searchedColumn === dataIndex ? (
+      <Highlighter
+        key="highlighter"
+        highlightStyle={{ backgroundColor: '#ffc069', padding: 0 }}
+        // eslint-disable-next-line react/destructuring-assignment
+        searchWords={[this.state.searchText]}
+        autoEscape
+        textToHighlight={text ? text.toString() : ''}
+      />
+    ) : (
+      text
+    )),
   });
 
   handleSearch = (selectedKeys, confirm, dataIndex) => {
@@ -111,55 +116,57 @@ class Statistic extends React.Component {
 
   handleReset = (clearFilters) => {
     clearFilters();
-    this.setState({ searchText: "" });
+    this.setState({ searchText: '' });
   };
 
   render() {
-    console.log(this.props.data);
+    const { data } = this.props;
     const columns = [
       {
-        title: "Name",
-        dataIndex: "name",
-        key: "name",
-        width: "20%",
-        ...this.getColumnSearchProps("name"),
+        title: 'Name',
+        dataIndex: 'name',
+        key: 'name',
+        width: '20%',
+        ...this.getColumnSearchProps('name'),
         sorter: (a, b) => a.name.length - b.name.length,
-        sortDirections: ["descend", "ascend"],
+        sortDirections: ['descend', 'ascend'],
       },
       {
-        title: "Author",
-        dataIndex: "author",
-        key: "author",
-        width: "20%",
-        ...this.getColumnSearchProps("author"),
+        title: 'Author',
+        dataIndex: 'author',
+        key: 'author',
+        width: '20%',
+        ...this.getColumnSearchProps('author'),
         sorter: (a, b) => a.author.length - b.author.length,
-        sortDirections: ["descend", "ascend"],
+        sortDirections: ['descend', 'ascend'],
       },
       {
-        title: "Description",
-        dataIndex: "description",
-        key: "description",
-        ...this.getColumnSearchProps("description"),
+        title: 'Description',
+        dataIndex: 'description',
+        key: 'description',
+        ...this.getColumnSearchProps('description'),
         sorter: (a, b) => a.description.length - b.description.length,
-        sortDirections: ["descend", "ascend"],
+        sortDirections: ['descend', 'ascend'],
       },
       {
-        title: "Publish date",
-        dataIndex: "createDate",
-        width: "20%",
-        key: "createDate",
-        ...this.getColumnSearchProps("createDate"),
+        title: 'Publish date',
+        dataIndex: 'createDate',
+        width: '20%',
+        key: 'createDate',
+        ...this.getColumnSearchProps('createDate'),
         render: (text) => {
-          moment(text).format("ll");
+          moment(text).format('ll');
         },
       },
     ];
     return (
       <StyledWrapper>
         <Table
+          // eslint-disable-next-line no-shadow
+          rowKey={(data) => data.uuid}
           columns={columns}
-          pagination={{ position: ["bottomCenter"] }}
-          dataSource={this.props.data}
+          pagination={{ position: ['bottomCenter'] }}
+          dataSource={data}
         />
       </StyledWrapper>
     );
@@ -168,20 +175,25 @@ class Statistic extends React.Component {
 
 Statistic.propTypes = {
   getMagazinesAction: PropTypes.func,
-  data: PropTypes.array,
+  data: PropTypes.arrayOf(PropTypes.shape({
+    name: PropTypes.string,
+    description: PropTypes.string,
+    author: PropTypes.string,
+    uuid: PropTypes.string,
+  })),
+};
+Statistic.defaultProps = {
+  getMagazinesAction: () => {},
+  data: {},
 };
 
-const mapDispatchToProps = (dispatch) => {
-  return {
-    getMagazinesAction: () => {
-      dispatch(getMagazinesThunk());
-    },
-  };
-};
-const mapStateToProps = (state) => {
-  return {
-    data: selectMagazinesData(state)
-  };
-};
+const mapDispatchToProps = (dispatch) => ({
+  getMagazinesAction: () => {
+    dispatch(getMagazinesThunk());
+  },
+});
+const mapStateToProps = (state) => ({
+  data: selectMagazinesData(state),
+});
 
 export default connect(mapStateToProps, mapDispatchToProps)(Statistic);

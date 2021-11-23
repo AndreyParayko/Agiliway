@@ -2,7 +2,7 @@ import {
   GET_MAGAZINES_SUCCESS,
   GET_MAGAZINES_START,
   GET_MAGAZINES_ERROR,
-} from "../action-types/magazines.action-types";
+} from '../action-types/magazines.action-types';
 
 const initialState = {
   data: [],

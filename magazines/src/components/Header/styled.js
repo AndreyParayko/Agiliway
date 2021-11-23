@@ -1,5 +1,6 @@
-import styled from "styled-components";
-const StyledHeaderWrapper = styled.div`
+import styled from 'styled-components';
+
+export const StyledHeaderWrapper = styled.div`
   margin: 0;
   padding: 0;
   background-color: #24252a;
@@ -9,7 +10,6 @@ export const StyledLogo = styled.div`
   cursor: pointer;
   margin-right: auto;
   vertical-align: middle;
-
 `;
 export const StyledHeader = styled.header`
   display: flex;
@@ -31,8 +31,7 @@ export const StyledParagraph = styled.span`
 export const StyledUl = styled.ul`
   list-style: none;
   margin-left: 20px;
-  margin-top:1em;
-
+  margin-top: 1em;
 
   & > li {
     display: inline-block;
@@ -52,5 +51,3 @@ export const StyledUl = styled.ul`
     border-bottom: 1px solid;
   }
 `;
-
-export default StyledHeaderWrapper;

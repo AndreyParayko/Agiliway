@@ -1,1 +1,1 @@
-export {default} from './MagazinesItem'
+export {default} from './MagazinesItem';
