@@ -1,6 +1,20 @@
 import { all } from 'redux-saga/effects';
-import watcherGetMagazinesSaga from './magazinesSagas';
+import {
+  getMagazinesWatcherSaga,
+  getMagazineWatcherSaga,
+  editGetDataWatcherSaga,
+  editMagazineWatcherSaga,
+  deleteMagazineWatcherSaga,
+  addMagazineWatcherSaga,
+} from './magazinesSagas';
 
 export default function* rootSaga() {
-  yield all([watcherGetMagazinesSaga()]);
+  yield all([
+    getMagazinesWatcherSaga(),
+    getMagazineWatcherSaga(),
+    editGetDataWatcherSaga(),
+    editMagazineWatcherSaga(),
+    deleteMagazineWatcherSaga(),
+    addMagazineWatcherSaga(),
+  ]);
 }

@@ -6,7 +6,6 @@ import { SearchOutlined } from '@ant-design/icons';
 import React from 'react';
 import { connect } from 'react-redux';
 import PropTypes from 'prop-types';
-import moment from 'moment';
 import { getMagazinesThunk } from '../Magazines/thunks/MagazinesThunks';
 import { StyledWrapper } from '../Magazines/styled';
 import { selectMagazinesData } from '../Magazines/selectors/magazines.selectors';
@@ -154,9 +153,6 @@ class Statistic extends React.Component {
         width: '20%',
         key: 'createDate',
         ...this.getColumnSearchProps('createDate'),
-        render: (text) => {
-          moment(text).format('ll');
-        },
       },
     ];
     return (

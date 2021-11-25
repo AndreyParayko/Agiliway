@@ -8,19 +8,24 @@ import MagazinesItem from './MagazinesItem';
 import MagazineAddModal from './MagazineAddModal';
 import MagazineEditModal from './MagazineEditModal';
 import MagazineDeleteModal from './MagazineDeleteModal';
-import {
-  editMagazineThunk,
-  editGetDataThunk,
-  // getMagazinesThunk,
-  deleteMagazineThunk,
-  addMagazineThunk,
-} from './thunks/MagazinesThunks';
+// import {
+//   editMagazineThunk,
+//   editGetDataThunk,
+//   getMagazinesThunk,
+//   deleteMagazineThunk,
+//   addMagazineThunk,
+// } from './thunks/MagazinesThunks';
 import {
   getMagazinesStartAction,
+  editModalGetDataStartAction,
+  // modalFunctionStartAction,
   addModalOpenAction,
   deleteModalOpenAction,
   editModalOpenAction,
   modalCloseAction,
+  editFunctionStartAction,
+  addFunctionStartAction,
+  deleteFunctionStartAction,
 } from './actions/actions';
 import {
   ADD_MODAL_TYPE,
@@ -139,10 +144,14 @@ const mapStateToProps = (state) => ({
 const mapDispatchToProps = {
   //  getMagazines: getMagazinesThunk,
   getMagazines: getMagazinesStartAction,
-  deleteMagazine: deleteMagazineThunk,
-  addMagazine: addMagazineThunk,
-  editMagazine: editMagazineThunk,
-  editGetData: editGetDataThunk,
+  // deleteMagazine: deleteMagazineThunk,
+  deleteMagazine: deleteFunctionStartAction,
+  // addMagazine: addMagazineThunk,
+  addMagazine: addFunctionStartAction,
+  // editMagazine: editMagazineThunk,
+  editMagazine: editFunctionStartAction,
+  // editGetData: editGetDataThunk,
+  editGetData: editModalGetDataStartAction,
   openAddModal: addModalOpenAction,
   openDeleteModal: deleteModalOpenAction,
   openEditModal: editModalOpenAction,

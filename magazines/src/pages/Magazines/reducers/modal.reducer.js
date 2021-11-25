@@ -2,13 +2,15 @@ import {
   ADD_MODAL_OPEN,
   EDIT_MODAL_OPEN,
   DELETE_MODAL_OPEN,
-  MODAL_FUNCTION_START,
-  MODAL_FUNCTION_SUCCESS,
-  MODAL_FUNCTION_ERROR,
+  FUNCTION_START,
+  FUNCTION_SUCCESS,
+  FUNCTION_IN_PROGRESS,
+  FUNCTION_ERROR,
   MODAL_CLOSE,
   EDIT_MODAL_GET_DATA_START,
   EDIT_MODAL_GET_DATA_ERROR,
   EDIT_MODAL_GET_DATA_SUCCESS,
+  EDIT_MODAL_GET_DATA_IN_PROGRESS,
 } from '../action-types/magazines.action-types';
 
 const initialState = {
@@ -41,19 +43,23 @@ const modalReducer = (state = initialState, action) => {
         id: action.payload.id,
         name: action.payload.name,
       };
-    case MODAL_FUNCTION_START:
+    case FUNCTION_START:
       return { ...state, isLoading: true };
-    case MODAL_FUNCTION_SUCCESS:
+    case FUNCTION_IN_PROGRESS:
+      return { ...state, isLoading: true };
+    case FUNCTION_SUCCESS:
       return {
         ...initialState,
       };
-    case MODAL_FUNCTION_ERROR:
+    case FUNCTION_ERROR:
       return { ...state, isLoading: false };
     case MODAL_CLOSE:
       return {
         ...initialState,
       };
     case EDIT_MODAL_GET_DATA_START:
+      return { ...state, isLoading: true };
+    case EDIT_MODAL_GET_DATA_IN_PROGRESS:
       return { ...state, isLoading: true };
     case EDIT_MODAL_GET_DATA_SUCCESS:
       return { ...state, data: action.payload, isLoading: false };

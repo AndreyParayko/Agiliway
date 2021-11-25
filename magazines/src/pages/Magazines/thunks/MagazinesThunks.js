@@ -6,9 +6,9 @@ import {
   editModalGetDataSuccessAction,
   editModalGetDataStartAction,
   editModalGetDataErrorAction,
-  modalFunctionStartAction,
-  modalFunctionSuccessAction,
-  modalFunctionErrorAction,
+  functionStartAction,
+  functionSuccessAction,
+  functionErrorAction,
 } from '../actions/actions';
 
 import {
@@ -43,41 +43,42 @@ export const editGetDataThunk = (id) => (dispatch) => {
 };
 
 export const editMagazineThunk = (id, magazine) => (dispatch) => {
-  dispatch(modalFunctionStartAction());
+  dispatch(functionStartAction());
   editMagazine(id, magazine)
     .then(() => {
-      dispatch(modalFunctionSuccessAction());
+      dispatch(functionSuccessAction());
       message.success('Magazine edited successfully');
       dispatch(getMagazinesThunk());
     })
     .catch(() => {
-      dispatch(modalFunctionErrorAction());
+      dispatch(functionErrorAction());
       message.error('Something went wrong. Magazine not edited.');
     });
 };
 export const deleteMagazineThunk = (id) => (dispatch) => {
-  dispatch(modalFunctionStartAction());
+  dispatch(functionStartAction());
   deleteMagazine(id)
     .then(() => {
-      dispatch(modalFunctionSuccessAction());
+      dispatch(functionSuccessAction());
       message.success('Magazine deleted successfully');
       dispatch(getMagazinesThunk());
     })
     .catch(() => {
-      dispatch(modalFunctionErrorAction());
+      dispatch(functionErrorAction());
       message.error('Something went wrong. Magazine not delited.');
     });
 };
+
 export const addMagazineThunk = (magazine) => (dispatch) => {
-  dispatch(modalFunctionStartAction());
+  dispatch(functionStartAction());
   addMagazine(magazine)
     .then(() => {
-      dispatch(modalFunctionSuccessAction());
+      dispatch(functionSuccessAction());
       message.success('Magazine added successfully');
       dispatch(getMagazinesThunk());
     })
     .catch(() => {
-      dispatch(modalFunctionErrorAction());
+      dispatch(functionErrorAction());
       message.error('Something went wrong. Magazine not added.');
     });
 };

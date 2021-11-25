@@ -28,5 +28,6 @@ module.exports = {
     'default-param-last': 'off',
     'react/state-in-constructor': 'off',
     'react/no-unstable-nested-components': 'off',
+    'no-undef': 'off',
   },
 };

@@ -4,9 +4,10 @@ import { connect } from 'react-redux';
 import moment from 'moment';
 import PropTypes from 'prop-types';
 import StyledWrapper from '../Home/styled';
-import getMagazineByIdThunk from '../Magazines/thunks/MagazineThunks';
+// import getMagazineByIdThunk from '../Magazines/thunks/MagazineThunks';
 import Loader from '../../components/Loader';
 import * as selectors from './selectors/magazine.selectors';
+import {getMagazineStartAction} from '../Magazines/actions/actions';
 
 class MagazineDetails extends React.Component {
   componentDidMount() {
@@ -73,10 +74,9 @@ const mapStateToProps = (state) => ({
   isLoading: selectors.selectIsLoading(state),
 });
 
-const mapDispatchToProps = (dispatch) => ({
-  getMagazineById: (id) => {
-    dispatch(getMagazineByIdThunk(id));
-  },
-});
+const mapDispatchToProps = {
+  // getMagazineById: getMagazineByIdThunk,
+  getMagazineById: getMagazineStartAction,
+};
 
 export default connect(mapStateToProps, mapDispatchToProps)(MagazineDetails);
