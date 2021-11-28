@@ -31,7 +31,7 @@ import {
   ADD_FUNCTION_START,
 } from '../action-types/magazines.action-types';
 
-function* getMagazinesSaga() {
+export function* getMagazinesSaga() {
   try {
     yield put(getMagazinesInProgressAction());
     const data = yield call(getMagazines);

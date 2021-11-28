@@ -1,49 +1,42 @@
 import thunk from 'redux-thunk';
-import configureMockStore from 'redux-mock-store';
 import moxios from 'moxios';
-import {getMagazinesThunk} from '../MagazinesThunks';
+import configureMockStore from 'redux-mock-store';
+import { getMagazinesThunk } from '../MagazinesThunks';
+import client from '../../../../api/client';
 
 const middleware = [thunk];
 const mockStore = configureMockStore(middleware);
 const initialState = {
   data: [],
-  isLoading: true,
+  loading: false,
 };
-const postsList = [
-  {
-    uuid: 1,
-    name: 'aaa',
-    description:
-      'sunt aut facere repellat provident occaecati excepturi optio reprehenderit',
-    author: 'abc',
-    publishDate: 'today',
-  },
-];
-describe('Test Post Actions', () => {
+
+describe('Test getMagazinesThumk', () => {
   let store;
   beforeEach(() => {
-    moxios.install();
+    moxios.install(client);
     store = mockStore(initialState);
   });
   afterEach(() => {
     moxios.uninstall();
   });
 
-  it('Loads all posts correctly', (done) => {
+  it('Loads all magazines correctly', (done) => {
     moxios.wait(() => {
       const request = moxios.requests.mostRecent();
       request.respondWith({
         status: 200,
-        data: [
-          {
-            uuid: 1,
-            name: 'aaa',
-            description:
-              'sunt aut facere repellat provident occaecati excepturi optio reprehenderit',
-            author: 'abc',
-            publishDate: 'today',
-          },
-        ],
+        response: {
+          data: [
+            {
+              uuid: '98f89493-d557-4624-8cf6-005b0ae92895',
+              name: 'string',
+              author: 'string',
+              description: 'string',
+              createDate: '2021-11-26T09:55:07.213Z',
+            },
+          ],
+        },
       });
     });
 
@@ -52,17 +45,27 @@ describe('Test Post Actions', () => {
         type: 'GET_MAGAZINES_START',
       },
       {
+        payload: [
+          {
+            uuid: '98f89493-d557-4624-8cf6-005b0ae92895',
+            name: 'string',
+            author: 'string',
+            description: 'string',
+            createDate: '2021-11-26T09:55:07.213Z',
+          },
+        ],
+
         type: 'GET_MAGAZINES_SUCCESS',
-        postsList,
       },
     ];
-    store.dispatch(getMagazinesThunk());
-    const actualAction = store.getActions();
-    expect(actualAction).toEqual(expectedActions);
-    return done();
+    store.dispatch(getMagazinesThunk()).then(() => {
+      const actualAction = store.getActions();
+      expect(actualAction).toEqual(expectedActions);
+      done();
+    });
   });
 
-  it('Returns error action when no posts found', (done) => {
+  it('Returns error action on bad request', (done) => {
     moxios.wait(() => {
       const request = moxios.requests.mostRecent();
       request.respondWith({
@@ -78,9 +81,10 @@ describe('Test Post Actions', () => {
         type: 'GET_MAGAZINES_ERROR',
       },
     ];
-    store.dispatch(getMagazinesThunk());
-    const actualAction = store.getActions();
-    expect(actualAction).toEqual(expectedActions);
-    return done();
+    store.dispatch(getMagazinesThunk()).then(() => {
+      const actualAction = store.getActions();
+      expect(actualAction).toEqual(expectedActions);
+      done();
+    });
   });
 });
