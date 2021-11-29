@@ -15,12 +15,12 @@ describe('Saga test', () => {
   const generator = cloneableGenerator(getMagazinesSaga)();
   test('Positive Saga call test', () => {
     const clone = generator.clone();
-    // expect(clone.next().value).toEqual(put(getMagazinesInProgressAction()));
-    deepEqual(
-      clone.next().value,
-      put(getMagazinesInProgressAction()),
-      'should add inProgress action first',
-    );
+    expect(clone.next().value, 'should add inProgress action first').toEqual(put(getMagazinesInProgressAction()));
+    // deepEqual(
+    //   clone.next().value,
+    //   put(getMagazinesInProgressAction()),
+    //   'should add inProgress action first',
+    // );
     deepEqual(
       clone.next().value,
       call(api.getMagazines),

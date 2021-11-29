@@ -19,7 +19,7 @@ import {
   addMagazine,
 } from '../../../api/domain';
 
-export const getMagazinesThunk = () => async (dispatch) => {
+export const getMagazinesThunk = () => (dispatch) => {
   dispatch(getMagazinesStartAction());
   return getMagazines()
     .then((response) => {
