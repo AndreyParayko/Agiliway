@@ -12,7 +12,7 @@ export const RootContainer = styled.div`
   align-items: center;
 `;
 export const SuccessIcon = styled(CheckCircleIcon)`
-  font-size: 200px;
+  font-size: 200px;    
   color: #6be767;
   margin-bottom: 30px;
 `;
@@ -64,11 +64,13 @@ export const InputGroup = styled(AntInput.Group)`
   justify-content: center;
   margin-bottom: 8px;
   margin-top: 8px;
-  height: 45px;
+  height: 67px;
 `;
 export const StyledAntInput = styled(AntInput)`
   &.ant-input {
-    width: 30%;
+    width: 100%;
+    height: 40px;
+    margin-left: 0px;
     text-align: center;
   }
   &.ant-input::placeholder {
@@ -112,8 +114,8 @@ export const StyledDivider = styled(Divider)`
 
 export const StyledButtonDisabled = styled.button`
   border: none;
-  color: grey;
-  background-color: rgb(245, 242, 242);
+  color: red;
+  background-color: white;
   padding: 0;
   font-size: 16px;
   cursor: pointer;
@@ -121,10 +123,20 @@ export const StyledButtonDisabled = styled.button`
 `;
 export const StyledButtonActive = styled.button`
   border: none;
-  color: grey;
-  background-color: #0cf546;
+  color: green;
+  background-color: white;
+  font-size: 16px;
   padding: 0;
-  font-size: 16;
+  font-size: 16px;
+  cursor: pointer;
+  margin: 20px;
+`;
+export const StyledBackButton = styled.button`
+  border: none;
+  background-color: white;
+  font-size: 16px;
+  padding: 0;
+  font-size: 16px;
   cursor: pointer;
   margin: 20px;
 `;
@@ -153,6 +165,8 @@ export const SuccessButton = styled(Button)`
 export const StyledError = styled.p`
   color: red;
   margin-top: 1px;
+  margin-bottom: 0px;
+  height: 22px;
 `;
 export const StartButton = styled.button`
   width: 200px;
@@ -199,4 +213,19 @@ export const Stepper = styled.div`
   font-size: 19px;
   font-weight: bold;
   margin-top: 10px;
+`;
+
+export const InputContainer = styled.div`
+  display: flex;
+  flex-flow: column;
+  align-items: center;
+  margin: 0;
+  justify-content: space-between;
+  width: 100%;
+`;
+
+export const DateContainer = styled.div`
+  width: 90%;
+  display: flex;
+  justifycontent: center;
 `;

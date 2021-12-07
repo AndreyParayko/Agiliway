@@ -1,4 +1,4 @@
-import { StyledSelect, StyledError } from '../styled';
+import { StyledSelect, StyledError, InputContainer } from '../styled';
 import { Select as AntSelect } from 'antd';
 
 const children = [
@@ -9,12 +9,12 @@ const children = [
 
 const Select = ({ input, meta, errorDisplay }) => {
   return (
-    <>
+    <InputContainer>
       <StyledSelect size={'large'} {...input}>
         {children}
       </StyledSelect>
       {errorDisplay && meta.error && <StyledError>{meta.error}</StyledError>}
-    </>
+    </InputContainer>
   );
 };
 export default Select;
