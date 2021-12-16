@@ -1,1 +1,1 @@
-export {default} from './MagazineDetails'
+export {default} from './MagazineDetails';

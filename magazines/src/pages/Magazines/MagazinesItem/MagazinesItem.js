@@ -1,11 +1,12 @@
-import React from "react";
-import PropTypes from "prop-types";
-import { NavLink } from "react-router-dom";
-import { Card, Col, Menu, Dropdown } from "antd";
-import { EllipsisOutlined, FileMarkdownOutlined } from "@ant-design/icons";
-
-import { FlexButton, FlexCenter } from "../styled";
-import magazine from "../../../assets/images/magazine.jpg";
+import React from 'react';
+import PropTypes from 'prop-types';
+import { NavLink } from 'react-router-dom';
+import {
+  Card, Col, Menu, Dropdown,
+} from 'antd';
+import { EllipsisOutlined, FileMarkdownOutlined } from '@ant-design/icons';
+import { FlexButton, FlexCenter } from '../styled';
+import magazine from '../../../assets/images/magazine.jpg';
 
 const { Meta } = Card;
 const MagazineItem = ({
@@ -48,10 +49,11 @@ const MagazineItem = ({
           cover={<img alt="example" src={magazine} />}
           actions={[
             <NavLink to={`/details/${id}`}>
-              <FileMarkdownOutlined style={{ fontSize: "20px" }} key="open" />{" "}
+              <FileMarkdownOutlined style={{ fontSize: '20px' }} key="open" />
+              {' '}
               OPEN
             </NavLink>,
-            <Dropdown overlay={menu} trigger={["click"]} key="drop">
+            <Dropdown overlay={menu} trigger={['click']} key="drop">
               <EllipsisOutlined />
             </Dropdown>,
           ]}
@@ -70,6 +72,15 @@ MagazineItem.propTypes = {
   openEditModal: PropTypes.func,
   getData: PropTypes.func,
   openDeleteModal: PropTypes.func,
+};
+
+MagazineItem.defaultProps = {
+  openEditModal: () => {},
+  name: '',
+  openDeleteModal: () => {},
+  description: '',
+  id: '',
+  getData: () => {},
 };
 
 export default MagazineItem;

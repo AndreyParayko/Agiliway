@@ -1,3 +1,4 @@
+import { message } from 'antd';
 import {
   getMagazinesSuccessAction,
   getMagazinesStartAction,
@@ -5,86 +6,79 @@ import {
   editModalGetDataSuccessAction,
   editModalGetDataStartAction,
   editModalGetDataErrorAction,
-  modalFunctionStartAction,
-  modalFunctionSuccessAction,
-  modalFunctionErrorAction,
+  functionStartAction,
+  functionSuccessAction,
+  functionErrorAction,
+} from '../actions/actions';
 
-} from "../actions/actions";
-import getMagazines from "../../../api/domain";
-import { editMagazine } from "../../../api/domain";
-import { getMagazineById } from "../../../api/domain";
-import { deleteMagazine } from "../../../api/domain";
-import { addMagazine } from "../../../api/domain";
-import { message } from "antd";
+import {
+  editMagazine,
+  getMagazines,
+  getMagazineById,
+  deleteMagazine,
+  addMagazine,
+} from '../../../api/domain';
 
-export const getMagazinesThunk = () => {
-  return (dispatch) => {
-    dispatch(getMagazinesStartAction());
-    getMagazines()
-      .then((response) => {
-        dispatch(getMagazinesSuccessAction(response.data));
-      })
-      .catch((error) => {
-        dispatch(getMagazinesErrorAction(error));
-        message.error('Something went wrong. Can`t get a data.');
-      });
-  };
+export const getMagazinesThunk = () => (dispatch) => {
+  dispatch(getMagazinesStartAction());
+  return getMagazines()
+    .then((response) => {
+      dispatch(getMagazinesSuccessAction(response.data));
+    })
+    .catch((error) => {
+      dispatch(getMagazinesErrorAction(error));
+      // message.error('Something went wrong. Can`t get a data.');
+    });
 };
-export const editGetDataThunk = (id) => {
-  return (dispatch) => {
-    dispatch(editModalGetDataStartAction());
-    getMagazineById(id).then((response) => {
+export const editGetDataThunk = (id) => (dispatch) => {
+  dispatch(editModalGetDataStartAction());
+  getMagazineById(id)
+    .then((response) => {
       dispatch(editModalGetDataSuccessAction(response.data));
-    }).catch((error) => {
+    })
+    .catch((error) => {
       dispatch(editModalGetDataErrorAction(error));
       message.error('Something went wrong. Can`t get a data.');
     });
-  };
 };
 
-export const editMagazineThunk = (id, magazine) => {
-  return (dispatch) => {
-    dispatch(modalFunctionStartAction());
-    editMagazine(id, magazine)
-      .then(() => {
-        dispatch(modalFunctionSuccessAction());
-        message.success("Magazine edited successfully");
-        dispatch(getMagazinesThunk());
-      })
-      .catch((error) => {
-        dispatch(modalFunctionErrorAction());
-        message.error('Something went wrong. Magazine not edited.');
-      });
-  };
+export const editMagazineThunk = (id, magazine) => (dispatch) => {
+  dispatch(functionStartAction());
+  editMagazine(id, magazine)
+    .then(() => {
+      dispatch(functionSuccessAction());
+      message.success('Magazine edited successfully');
+      dispatch(getMagazinesThunk());
+    })
+    .catch(() => {
+      dispatch(functionErrorAction());
+      message.error('Something went wrong. Magazine not edited.');
+    });
 };
-export const deleteMagazineThunk = (id) => {
-  return (dispatch) => {
-    dispatch(modalFunctionStartAction());
-    console.log(id);
-    deleteMagazine(id)
-      .then(() => {
-        dispatch(modalFunctionSuccessAction());
-        message.success("Magazine deleted successfully");
-        dispatch(getMagazinesThunk());
-      })
-      .catch((error) => {
-        dispatch(modalFunctionErrorAction());
-        message.error('Something went wrong. Magazine not delited.');
-      });
-  };
+export const deleteMagazineThunk = (id) => (dispatch) => {
+  dispatch(functionStartAction());
+  deleteMagazine(id)
+    .then(() => {
+      dispatch(functionSuccessAction());
+      message.success('Magazine deleted successfully');
+      dispatch(getMagazinesThunk());
+    })
+    .catch(() => {
+      dispatch(functionErrorAction());
+      message.error('Something went wrong. Magazine not delited.');
+    });
 };
-export const addMagazineThunk = (magazine) => {
-  return (dispatch) => {
-    dispatch(modalFunctionStartAction());
-    addMagazine(magazine)
-      .then(() => {
-        dispatch(modalFunctionSuccessAction());
-        message.success("Magazine added successfully");
-        dispatch(getMagazinesThunk());
-      })
-      .catch((error) => {
-        dispatch(modalFunctionErrorAction());
-        message.error('Something went wrong. Magazine not added.');
-      });
-  };
+
+export const addMagazineThunk = (magazine) => (dispatch) => {
+  dispatch(functionStartAction());
+  addMagazine(magazine)
+    .then(() => {
+      dispatch(functionSuccessAction());
+      message.success('Magazine added successfully');
+      dispatch(getMagazinesThunk());
+    })
+    .catch(() => {
+      dispatch(functionErrorAction());
+      message.error('Something went wrong. Magazine not added.');
+    });
 };

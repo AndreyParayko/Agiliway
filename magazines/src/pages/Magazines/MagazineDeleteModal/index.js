@@ -1,1 +1,1 @@
-export {default} from './MagazineDeleteModal'
+export {default} from './MagazineDeleteModal';

@@ -1,37 +1,45 @@
-import React from "react";
-import { connect } from "react-redux";
-import { Row, Empty, Button } from "antd";
-import { StyledWrapper } from "./styled";
-import Loader from "../../components/Loader";
-import MagazinesItem from "./MagazinesItem";
-import MagazineAddModal from "./MagazineAddModal";
-import MagazineEditModal from "./MagazineEditModal";
-import MagazineDeleteModal from "./MagazineDeleteModal";
+import React from 'react';
+import PropTypes from 'prop-types';
+import { connect } from 'react-redux';
+import { Row, Empty, Button } from 'antd';
+import { StyledWrapper } from './styled';
+import Loader from '../../components/Loader';
+import MagazinesItem from './MagazinesItem';
+import MagazineAddModal from './MagazineAddModal';
+import MagazineEditModal from './MagazineEditModal';
+import MagazineDeleteModal from './MagazineDeleteModal';
+// import {
+//   editMagazineThunk,
+//   editGetDataThunk,
+//   getMagazinesThunk,
+//   deleteMagazineThunk,
+//   addMagazineThunk,
+// } from './thunks/MagazinesThunks';
 import {
-  editMagazineThunk,
-  editGetDataThunk,
-  getMagazinesThunk,
-  deleteMagazineThunk,
-  addMagazineThunk,
-} from "./thunks/MagazinesThunks";
-import {
+  getMagazinesStartAction,
+  editModalGetDataStartAction,
+  // modalFunctionStartAction,
   addModalOpenAction,
   deleteModalOpenAction,
   editModalOpenAction,
   modalCloseAction,
-} from "./actions/actions";
+  editFunctionStartAction,
+  addFunctionStartAction,
+  deleteFunctionStartAction,
+} from './actions/actions';
 import {
   ADD_MODAL_TYPE,
   EDIT_MODAL_TYPE,
   DELETE_MODAL_TYPE,
-} from "./constants";
-import * as selectors from "./selectors/magazines.selectors";
-import PropTypes from "prop-types";
+} from './constants';
+import * as selectors from './selectors/magazines.selectors';
 
 class Magazines extends React.Component {
   componentDidMount() {
-    this.props.getMagazines();
+    const { getMagazines } = this.props;
+    getMagazines();
   }
+
   render() {
     const {
       magazinesIsLoading,
@@ -63,13 +71,13 @@ class Magazines extends React.Component {
           )}
           {!magazinesIsLoading && (
             <Row gutter={[32, 24]}>
-              {currentMagazines.map((item, index) => (
+              {currentMagazines.map((item) => (
                 <MagazinesItem
                   openEditModal={openEditModal}
                   openDeleteModal={openDeleteModal}
                   name={item.name}
                   description={item.description}
-                  key={index}
+                  key={item.uuid}
                   id={item.uuid}
                   deleteAction={deleteMagazine}
                   getData={editGetData}
@@ -122,11 +130,48 @@ class Magazines extends React.Component {
     );
   }
 }
+
+const mapStateToProps = (state) => ({
+  magazinesData: selectors.selectMagazinesData(state),
+  magazinesIsLoading: selectors.selectMagazinesIsLoading(state),
+  modalIsLoading: selectors.selectModalIsLoading(state),
+  modalEditInitialValues: selectors.selectModalData(state),
+  modalDeleteId: selectors.selectModalId(state),
+  modalDeleteName: selectors.selectModalName(state),
+  modalType: selectors.selectModalType(state),
+});
+
+const mapDispatchToProps = {
+  //  getMagazines: getMagazinesThunk,
+  getMagazines: getMagazinesStartAction,
+  // deleteMagazine: deleteMagazineThunk,
+  deleteMagazine: deleteFunctionStartAction,
+  // addMagazine: addMagazineThunk,
+  addMagazine: addFunctionStartAction,
+  // editMagazine: editMagazineThunk,
+  editMagazine: editFunctionStartAction,
+  // editGetData: editGetDataThunk,
+  editGetData: editModalGetDataStartAction,
+  openAddModal: addModalOpenAction,
+  openDeleteModal: deleteModalOpenAction,
+  openEditModal: editModalOpenAction,
+  closeModal: modalCloseAction,
+};
 Magazines.propTypes = {
-  magazinesData: PropTypes.array,
+  magazinesData: PropTypes.arrayOf(PropTypes.shape({
+    name: PropTypes.string,
+    description: PropTypes.string,
+    author: PropTypes.string,
+    uuid: PropTypes.string,
+  })),
   magazinesIsLoading: PropTypes.bool,
   modalIsLoading: PropTypes.bool,
-  modalEditInitialValues: PropTypes.object,
+  modalEditInitialValues: PropTypes.shape({
+    name: PropTypes.string,
+    description: PropTypes.string,
+    author: PropTypes.string,
+    uuid: PropTypes.string,
+  }),
   modalDeleteId: PropTypes.string,
   modalDeleteName: PropTypes.string,
   modalType: PropTypes.string,
@@ -140,28 +185,23 @@ Magazines.propTypes = {
   openEditModal: PropTypes.func,
   closeModal: PropTypes.func,
 };
-const mapStateToProps = (state) => {
-  return {
-    magazinesData: selectors.selectMagazinesData(state),
-    magazinesIsLoading: selectors.selectMagazinesIsLoading(state),
-    modalIsLoading: selectors.selectModalIsLoading(state),
-    modalEditInitialValues: selectors.selectModalData(state),
-    modalDeleteId: selectors.selectModalId(state),
-    modalDeleteName: selectors.selectModalName(state),
-    modalType: selectors.selectModalType(state),
-  };
-};
-
-const mapDispatchToProps = {
-  getMagazines: getMagazinesThunk,
-  deleteMagazine: deleteMagazineThunk,
-  addMagazine: addMagazineThunk,
-  editMagazine: editMagazineThunk,
-  editGetData: editGetDataThunk,
-  openAddModal: addModalOpenAction,
-  openDeleteModal: deleteModalOpenAction,
-  openEditModal: editModalOpenAction,
-  closeModal: modalCloseAction,
+Magazines.defaultProps = {
+  magazinesData: [],
+  magazinesIsLoading: true,
+  modalIsLoading: true,
+  modalEditInitialValues: {},
+  modalDeleteId: '',
+  modalDeleteName: '',
+  modalType: '',
+  getMagazines: () => {},
+  deleteMagazine: () => {},
+  addMagazine: () => {},
+  editMagazine: () => {},
+  editGetData: () => {},
+  openAddModal: () => {},
+  openDeleteModal: () => {},
+  openEditModal: () => {},
+  closeModal: () => {},
 };
 
 export default connect(mapStateToProps, mapDispatchToProps)(Magazines);
